@@ -5,39 +5,24 @@ import Button from './components/Button';
 import Output from './components/Output';
 import PlayPauseButton from './components/PlayPauseButton';
 
+const TIMER_CONST = 60000;
+
 const App = () => {
-const [val, setVal] = useState(60);
-const [isId, setIsId] = useState();
-const [timer, setTimer] = useState(1000);
+const [tempo, setTempo] = useState(60);
+const [intervalId, setIntervalId] = useState();
 
 useEffect(() => {
-  setTimer(60000/val);
-  console.log('val', val); 
-}, [val])
+  restartMetronome();
+}, [tempo])
 
-const faster = () => {
-
-  setVal(val + 1);
-  console.log( val);
-
-  if (isId) {
-  pause();
-  play();
-  }
-}
-
-const slower = () => {
-
-  setVal(val - 1);
-  if (isId) {
+const restartMetronome = () => {
+  if (intervalId) {
     pause();
     play();
   }
 }
 
-
-
- const timeout = () => { 
+ const tick = () => { 
   let context = new AudioContext()
   let o = context.createOscillator()
   let  g = context.createGain()
@@ -48,20 +33,19 @@ const slower = () => {
  }
 
  const play = () => {
-  
-  const id = setInterval(timeout, timer);
-  setIsId(id);
+  const timer = TIMER_CONST / tempo;
+  const id = setInterval(tick, timer);
+  setIntervalId(id);
     
  }
 
  const pause = () => {
-    clearInterval(isId);
-    setIsId(null);
+  clearInterval(intervalId);
+  setIntervalId(null);
  }
 
-const playPause = () => {
-
-  if (!isId) {
+const togglePlay = () => {
+  if (!intervalId) {
    play();
   } else {
    pause();
@@ -72,11 +56,11 @@ const playPause = () => {
   return (
     <div className="App">
       <h1>METRONOM</h1>
-      <PlayPauseButton playTheSound={playPause}/>
+      <PlayPauseButton playTheSound={togglePlay}/>
       <div className="containerApp">
-      <Button value="+" changeValue={faster} />
-      <Output val={val} />
-      <Button value="-" changeValue={slower}/>
+      <Button value="+" changeValue={() => setTempo(tempo + 1)} />
+      <Output val={tempo} />
+      <Button value="-" changeValue={() => setTempo(tempo - 1)}/>
       </div>
     </div>
   );
