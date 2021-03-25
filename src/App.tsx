@@ -10,6 +10,7 @@ const TIMER_CONST = 60000;
 const App = () => {
 const [tempo, setTempo] = useState(60);
 const [intervalId, setIntervalId] = useState();
+const [toggleClass, setToggleClass] = useState(false);
 
 useEffect(() => {
   restartMetronome();
@@ -30,6 +31,9 @@ const restartMetronome = () => {
   g.connect(context.destination)
   o.start(0)
   o.stop(0.01);
+
+  setToggleClass(oldClass => !oldClass);
+  console.log(toggleClass);
  }
 
  const play = () => {
@@ -56,6 +60,7 @@ const togglePlay = () => {
   return (
     <div className="App">
       <h1>METRONOM</h1>
+      <div className={`${toggleClass ? 'show' : 'hide'}`}>Hide and show</div>
       <PlayPauseButton playTheSound={togglePlay}/>
       <div className="containerApp">
       <Button value="+" changeValue={() => setTempo(tempo + 1)} />
