@@ -4,6 +4,8 @@ import './App.css';
 import Button from './components/Button';
 import Output from './components/Output';
 import PlayPauseButton from './components/PlayPauseButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 const TIMER_CONST = 60000;
 
@@ -11,6 +13,7 @@ const App = () => {
 const [tempo, setTempo] = useState(60);
 const [intervalId, setIntervalId] = useState();
 const [toggleClass, setToggleClass] = useState(false);
+const [buttonName, setButtonName] = useState('play');
 
 useEffect(() => {
   restartMetronome();
@@ -51,8 +54,10 @@ const restartMetronome = () => {
 const togglePlay = () => {
   if (!intervalId) {
    play();
+   setButtonName('pause');
   } else {
    pause();
+   setButtonName('play');
   }
 }
   
@@ -60,12 +65,18 @@ const togglePlay = () => {
   return (
     <div className="App">
       <h1>METRONOM</h1>
-      <div className={`${toggleClass ? 'show' : 'hide'}`}>Hide and show</div>
-      <PlayPauseButton playTheSound={togglePlay}/>
+      <div className={`${toggleClass ? 'show' : 'hide'}`}>
+      <FontAwesomeIcon icon={faCircle} className="firstCircle"/>
+      <FontAwesomeIcon icon={faCircle} className="secondCircle"/>
+      <FontAwesomeIcon icon={faCircle} className="thirdCircle"/>
+      </div>
       <div className="containerApp">
-      <Button value="+" changeValue={() => setTempo(tempo + 1)} />
       <Output val={tempo} />
-      <Button value="-" changeValue={() => setTempo(tempo - 1)}/>
+      </div>
+      <div className="buttons">
+      <Button value="-" changeValue={() => setTempo(tempo - 1)} />
+      <PlayPauseButton playTheSound={togglePlay} buttonName={buttonName}/>
+      <Button value="+" changeValue={() => setTempo(tempo + 1)}/>
       </div>
     </div>
   );

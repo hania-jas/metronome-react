@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PlayPauseButton = ({playTheSound}) => {
+const PlayPauseButton = ({playTheSound, buttonName}) => {
   return (
-  <button className="playPause" onClick={playTheSound}>PLAY</button>
+  <button className="playPause" onClick={playTheSound}>{buttonName}</button>
   )
 }
 
