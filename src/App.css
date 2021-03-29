@@ -6,14 +6,15 @@ body {
 .App {
     text-align: center;
     width: 25vw;
-    background-color: #282c34;
+    background-color: #29323e;
     height: 600px;
     border-radius: 50px;
     color: cadetblue;
 }
 
 .firstCircle {
-    margin-right: 5px;;
+    margin-right: 5px;
+    ;
 }
 
 .secondCircle {
@@ -24,9 +25,10 @@ body {
     opacity: 1;
 }
 
-.hide {
+.mask {
     opacity: 0;
 }
+
 
 /* .playPause {
     cursor: pointer;
@@ -59,16 +61,25 @@ body {
     background-color:#191919;
     
   } */
-  .playPause {
-    border-radius: 3em;
-    border-color:#2ecc71;
+
+.playPause {
+    height: 45px;
+    border-radius: 100rem;
+    border-color: #2ecc71;
     color: #2ecc71;
-   
-  }
+    align-self: flex-end;
+    color: #157198;
+    border: solid 3px transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #44c0fe, #4ddefa, #55f6f7);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 2px 1000px 1px #29323e inset;
+    text-transform: uppercase;
+}
 
 .containerApp {
     display: flex;
-    height: 400px;
+    height: 300px;
     align-items: flex-end;
     justify-content: space-around;
 }
@@ -89,20 +100,25 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .buttons {
+    margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 100px;
+    height: 120px;
 }
 
 .button {
+    color: #157198;
+    font-size: 25px;
     width: 45px;
     height: 45px;
-    background-color: cadetblue;
-    border-radius: 10px;
-    margin-bottom: 50px;
-    color: #282c34;
-    cursor: pointer;
-    border-color: transparent;
+    border-radius: 100rem;
+    font-family: 'Avenir Next';
+    border: solid 3px transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #44c0fe, #4ddefa, #55f6f7);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 2px 1000px 1px #29323e inset;
 }
