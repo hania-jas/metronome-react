@@ -1,57 +1,58 @@
-// @ts-nocheck
+
 import React, {useState, useEffect} from 'react';
+// @ts-ignore
 import CircularSlider from '@fseehawer/react-circular-slider';  
-import ReactDOM from 'react-dom';
 import './App.css';
+// @ts-ignore
 import tick1 from './sounds/tick1.wav';
 import Button from './components/Button';
-import Output from './components/Output';
 import PlayPauseButton from './components/PlayPauseButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faPlay, faPause, faPlus, faMinus, faRecordVinyl } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { faPlay, faPause, faPlus, faMinus, faRecordVinyl } from '@fortawesome/free-solid-svg-icons'
 
 const TIMER_CONST = 60000;
 let audio = new Audio(tick1);
 
-const App = () => {
-const [tempo, setTempo] = useState(60);
-const [intervalId, setIntervalId] = useState();
-const [toggleClass, setToggleClass] = useState(false);
-const [buttonName, setButtonName] = useState(<FontAwesomeIcon icon={faPlay}/>);
+const App: React.FC = () => {
+const [tempo, setTempo] = useState<number>(60);
+const [intervalId, setIntervalId] = useState< null | NodeJS.Timeout>();
+const [toggleClass, setToggleClass] = useState<boolean>(false);
+const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlay}/>);
 
 useEffect(() => {
   restartMetronome();
 }, [tempo])
 
-const restartMetronome = () => {
+const restartMetronome = (): void => {
   if (intervalId) {
     pause();
     play();
   }
 }
 
- const tick = () => { 
+ const tick = (): void => { 
   audio.play();
   setToggleClass(oldClass => !oldClass);
   console.log(toggleClass);
  }
 
- const play = () => {
+ const play = (): void => {
   const timer = TIMER_CONST / tempo;
   const id = setInterval(tick, timer);
   setIntervalId(id);
     
  }
 
- const pause = () => {
+ const pause = (): void => {
+   // @ts-ignore
   clearInterval(intervalId);
   setIntervalId(null);
  }
 
-const togglePlay = () => {
+const togglePlay = (): void => {
   if (!intervalId) {
    play();
-   setButtonName( <FontAwesomeIcon icon={faPause}/>);
+   setButtonName(<FontAwesomeIcon icon={faPause}/>);
   } else {
    pause();
    setButtonName(<FontAwesomeIcon icon={faPlay}/>);
@@ -81,7 +82,7 @@ const togglePlay = () => {
         labelColor="#45def0"
         min={0}
         max={400}
-        onChange={(tempo) => { setTempo(tempo)
+        onChange={(tempo: number) => { setTempo(tempo)
         console.log(tempo);}
         }
         />

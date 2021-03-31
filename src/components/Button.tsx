@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Button = ({value, changeValue}) => {
+interface ButtonProps {
+  value: any;
+  changeValue: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({value, changeValue}) => {
   return(
     <button className="button" onClick={changeValue}>{value}</button>
   )
