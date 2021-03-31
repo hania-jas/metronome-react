@@ -8,7 +8,7 @@ import tick1 from './sounds/tick1.wav';
 import Button from './components/Button';
 import PlayPauseButton from './components/PlayPauseButton';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
-import { faPlay, faPause, faPlus, faMinus, faRecordVinyl } from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl } from '@fortawesome/free-solid-svg-icons'
 
 const TIMER_CONST = 60000;
 let audio = new Audio(tick1);
@@ -17,7 +17,7 @@ const App: React.FC = () => {
 const [tempo, setTempo] = useState<number>(60);
 const [intervalId, setIntervalId] = useState< null | NodeJS.Timeout>();
 const [toggleClass, setToggleClass] = useState<boolean>(false);
-const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlay}/>);
+const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlayCircle}/>);
 
 useEffect(() => {
   restartMetronome();
@@ -55,7 +55,7 @@ const togglePlay = (): void => {
    setButtonName(<FontAwesomeIcon icon={faPause}/>);
   } else {
    pause();
-   setButtonName(<FontAwesomeIcon icon={faPlay}/>);
+   setButtonName(<FontAwesomeIcon icon={faPlayCircle}/>);
   }
 }
   
