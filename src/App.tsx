@@ -1,30 +1,43 @@
+// @ts-nocheck
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import ReactDOM from 'react-dom';
 // @ts-ignore
-import CircularSlider from '@fseehawer/react-circular-slider';  
+import CircularSlider from '@fseehawer/react-circular-slider';
+import Select from 'react-select'  
 import './App.css';
 // @ts-ignore
 import tick1 from './sounds/tick1.wav';
+import tick2 from './sounds/tick2.wav';
 import Button from './components/Button';
 import PlayPauseButton from './components/PlayPauseButton';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
-import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl } from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl, faMusic } from '@fortawesome/free-solid-svg-icons'
 
 const TIMER_CONST = 60000;
-let audio = new Audio(tick1);
 
-const App: React.FC = () => {
+
+const App = () => {
 const [tempo, setTempo] = useState<number>(60);
-const [intervalId, setIntervalId] = useState< null | NodeJS.Timeout>();
 const [toggleClass, setToggleClass] = useState<boolean>(false);
 const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlayCircle}/>);
+const [sound, setSound] = useState(tick1)
+const intervalRef = useRef(null);
+
+let audio = new Audio(sound);
+
+const options = [
+  {value: tick1, label: 1 },
+  {value: tick2, label: 2 }
+]
+
 
 useEffect(() => {
   restartMetronome();
-}, [tempo])
+}, [tempo, options])
 
 const restartMetronome = (): void => {
-  if (intervalId) {
+  if (intervalRef.current !== null) {
     pause();
     play();
   }
@@ -39,18 +52,19 @@ const restartMetronome = (): void => {
  const play = (): void => {
   const timer = TIMER_CONST / tempo;
   const id = setInterval(tick, timer);
-  setIntervalId(id);
+  intervalRef.current = id;
+  console.log(options[0].label)
     
  }
 
  const pause = (): void => {
    // @ts-ignore
-  clearInterval(intervalId);
-  setIntervalId(null);
+  clearInterval(intervalRef.current);
+  intervalRef.current = null;
  }
 
 const togglePlay = (): void => {
-  if (!intervalId) {
+  if (intervalRef.current === null) {
    play();
    setButtonName(<FontAwesomeIcon icon={faPause}/>);
   } else {
@@ -58,6 +72,8 @@ const togglePlay = (): void => {
    setButtonName(<FontAwesomeIcon icon={faPlayCircle}/>);
   }
 }
+
+const handleChange = (option) => setSound(option.value)
   
 
   return (
@@ -91,6 +107,9 @@ const togglePlay = (): void => {
         <Button value={<FontAwesomeIcon icon={faMinus}/>} changeValue={() => setTempo(tempo - 1)} />
         <PlayPauseButton playTheSound={togglePlay} buttonName={buttonName}/>
         <Button value={<FontAwesomeIcon icon={faPlus}/>} changeValue={() => setTempo(tempo + 1)}/>
+      </div>
+      <div className="controlButtons">
+      <Select onChange={handleChange} options={options} placeholder={<FontAwesomeIcon icon={faMusic}/>}/>
       </div>
     </div>
   );
