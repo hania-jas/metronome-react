@@ -1,4 +1,3 @@
-
 body {
     display: flex;
     justify-content: center;
@@ -33,7 +32,7 @@ body {
 .secondCircle {
     margin-right: 5px;
     font-size: 25px;
-    color:#1f8baa;
+    color: #1f8baa;
 }
 
 .show {
@@ -43,7 +42,6 @@ body {
 .mask {
     opacity: 0;
 }
-
 
 .containerApp {
     display: flex;
@@ -90,6 +88,18 @@ body {
     background-clip: content-box, border-box;
     box-shadow: 2px 1000px 1px #1e262f inset;
 }
+
+.volumeButton {
+    width: 60px;
+    height: 60px;
+    border-radius: 100rem;
+    color: #808080;
+    font-size: 20px;
+    margin-left: 10px;
+    background-color: #1e262f;
+    border: none;
+}
+
 .playPause {
     font-size: 35px;
     height: 100px;
@@ -109,24 +119,20 @@ body {
 
 .controlButtons {
     display: flex;
-    justify-content:end;
+    justify-content: space-between;
 }
-.css-2b097c-container {
-    margin-right: 20px;
-    width: 50px;
-}
-.css-yk16xz-control {
-   width: 50px;
-   height: 50px;
-   border-radius: 100rem  !important;
+
+.MuiSlider-root {
+    width: 80px;
+    position: relative;
+    top: 9px;
+    right: 12px;
+    margin-right: 120px;
+    color: #808080;
 }
 
 .css-g1d714-ValueContainer {
     display: flex;
     justify-content: center;
-}
-
-.css-tlfecz-indicatorContainer,
-.css-1hb7zxy-IndicatorsContainer {
-    display: none !important;
+    font-size: 20px;
 }

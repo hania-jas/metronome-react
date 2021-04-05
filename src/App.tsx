@@ -5,26 +5,69 @@ import ReactDOM from 'react-dom';
 // @ts-ignore
 import CircularSlider from '@fseehawer/react-circular-slider';
 import Select from 'react-select'  
+import Slider from '@material-ui/core/Slider';
+import { StylesProvider } from "@material-ui/core/styles";
 import './App.css';
 // @ts-ignore
 import tick1 from './sounds/tick1.wav';
 import tick2 from './sounds/tick2.wav';
 import Button from './components/Button';
+import VolumeButton from './components/VolumeButton';
 import PlayPauseButton from './components/PlayPauseButton';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
-import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl, faMusic } from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl, faMusic, faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 
 const TIMER_CONST = 60000;
 
 
+
 const App = () => {
 const [tempo, setTempo] = useState<number>(60);
-const [toggleClass, setToggleClass] = useState<boolean>(false);
+const [isAnimationVisible, setIsAnimationVisible] = useState<boolean>(false);
+const [isVolumeVisible, setIsVolumeVisible] = useState(false);
 const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlayCircle}/>);
 const [sound, setSound] = useState(tick1)
+const [volume, setVolume] = useState(1);
 const intervalRef = useRef(null);
 
 let audio = new Audio(sound);
+audio.volume = volume;
+
+const selectStyles = {
+  control: (provided) => ({
+    ...provided,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    backgroundColor: '#1e262f',
+    border: 'none',
+    marginBottom: 10,
+
+  }),
+  indicatorsContainer: () => ({
+    display: 'none',  
+  }),
+  container: () =>({
+    marginRight: 20,
+    width: 55,
+  }),
+  menu: () => ({
+    background: 'transparent',
+    borderRadius: 100,
+   
+    }),
+  option: () => ({
+    height:20,
+    paddingTop: 5,
+   paddingBottom: 5,
+    color: '#808080',
+    cursor: 'pointer',
+  }),
+  singleValue: () => ({
+    color: '#808080',
+  }),
+ 
+}
 
 const options = [
   {value: tick1, label: 1 },
@@ -45,8 +88,7 @@ const restartMetronome = (): void => {
 
  const tick = (): void => { 
   audio.play();
-  setToggleClass(oldClass => !oldClass);
-  console.log(toggleClass);
+  setIsAnimationVisible(oldClass => !oldClass);
  }
 
  const play = (): void => {
@@ -74,11 +116,15 @@ const togglePlay = (): void => {
 }
 
 const handleChange = (option) => setSound(option.value)
+
+const handleSound = (event, newValue) => {
+  setVolume(newValue);
+};
   
 
   return (
     <div className="App">
-      <div className={`animation ${toggleClass ? 'show' : 'mask'}`}>
+      <div className={`animation ${isAnimationVisible ? 'show' : 'mask'}`}>
         <FontAwesomeIcon icon={faRecordVinyl} className="firstCircle"/>
         <FontAwesomeIcon icon={faRecordVinyl} className="secondCircle"/>
         <FontAwesomeIcon icon={faRecordVinyl} className="thirdCircle"/>
@@ -109,7 +155,13 @@ const handleChange = (option) => setSound(option.value)
         <Button value={<FontAwesomeIcon icon={faPlus}/>} changeValue={() => setTempo(tempo + 1)}/>
       </div>
       <div className="controlButtons">
-      <Select onChange={handleChange} options={options} placeholder={<FontAwesomeIcon icon={faMusic}/>}/>
+        <VolumeButton value={<FontAwesomeIcon icon={faVolumeUp}/>} />
+        <div>
+        <StylesProvider  injectFirst>
+         <Slider value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>
+         </StylesProvider>
+         </div>
+        <Select onChange={handleChange} options={options} placeholder={<FontAwesomeIcon icon={faMusic}/>} styles={selectStyles}/>
       </div>
     </div>
   );
