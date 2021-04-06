@@ -60,11 +60,11 @@ const selectStyles = {
     height:20,
     paddingTop: 5,
    paddingBottom: 5,
-    color: '#808080',
+    color: '#586069',
     cursor: 'pointer',
   }),
   singleValue: () => ({
-    color: '#808080',
+    color: '#586069',
   }),
  
 }
@@ -120,6 +120,10 @@ const handleChange = (option) => setSound(option.value)
 const handleSound = (event, newValue) => {
   setVolume(newValue);
 };
+
+const handleVolumeVisibility = () => {
+  setIsVolumeVisible(oldClass => !oldClass)
+}
   
 
   return (
@@ -155,10 +159,10 @@ const handleSound = (event, newValue) => {
         <Button value={<FontAwesomeIcon icon={faPlus}/>} changeValue={() => setTempo(tempo + 1)}/>
       </div>
       <div className="controlButtons">
-        <VolumeButton value={<FontAwesomeIcon icon={faVolumeUp}/>} />
+        <VolumeButton value={<FontAwesomeIcon icon={faVolumeUp}/>}  controlVolume={handleVolumeVisibility}/>
         <div>
         <StylesProvider  injectFirst>
-         <Slider value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>
+         <Slider className={` ${isVolumeVisible? 'showVolume' : 'hideVolume'}`} value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>
          </StylesProvider>
          </div>
         <Select onChange={handleChange} options={options} placeholder={<FontAwesomeIcon icon={faMusic}/>} styles={selectStyles}/>
