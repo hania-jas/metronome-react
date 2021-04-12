@@ -1,8 +1,6 @@
-// @ts-nocheck
 
 import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
-// @ts-ignore
 import CircularSlider from '@fseehawer/react-circular-slider';
 import Select from 'react-select'  
 import Slider from '@material-ui/core/Slider';
@@ -10,6 +8,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 import './App.css';
 // @ts-ignore
 import tick1 from './sounds/tick1.wav';
+// @ts-ignore
 import tick2 from './sounds/tick2.wav';
 import Button from './components/Button';
 import VolumeButton from './components/VolumeButton';
@@ -20,21 +19,21 @@ import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl, faMusic, faVolum
 const TIMER_CONST = 60000;
 
 
-
 const App = () => {
 const [tempo, setTempo] = useState<number>(60);
 const [isAnimationVisible, setIsAnimationVisible] = useState<boolean>(false);
-const [isVolumeVisible, setIsVolumeVisible] = useState(false);
+const [isVolumeVisible, setIsVolumeVisible] = useState<boolean>(false);
 const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlayCircle}/>);
 const [sound, setSound] = useState(tick1)
-const [volume, setVolume] = useState(1);
-const intervalRef = useRef(null);
+const [volume, setVolume] = useState<number>(1);
+const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
 let audio = new Audio(sound);
 audio.volume = volume;
 
 const selectStyles = {
-  control: (provided) => ({
+  
+  control: (provided: object) => ({
     ...provided,
     width: 60,
     height: 60,
@@ -59,7 +58,7 @@ const selectStyles = {
   option: () => ({
     height:20,
     paddingTop: 5,
-   paddingBottom: 5,
+    paddingBottom: 5,
     color: '#586069',
     cursor: 'pointer',
   }),
@@ -100,12 +99,12 @@ const restartMetronome = (): void => {
  }
 
  const pause = (): void => {
-   // @ts-ignore
+  // @ts-ignore
   clearInterval(intervalRef.current);
   intervalRef.current = null;
  }
 
-const togglePlay = (): void => {
+  const togglePlay = (): void => {
   if (intervalRef.current === null) {
    play();
    setButtonName(<FontAwesomeIcon icon={faPause}/>);
@@ -113,17 +112,16 @@ const togglePlay = (): void => {
    pause();
    setButtonName(<FontAwesomeIcon icon={faPlayCircle}/>);
   }
-}
-
-const handleChange = (option) => setSound(option.value)
-
-const handleSound = (event, newValue) => {
+}// @ts-ignore
+  const handleChange = (option): void => setSound(option.value)
+// @ts-ignore
+  const handleSound = (event, newValue): void => {
   setVolume(newValue);
 };
 
-const handleVolumeVisibility = () => {
+  const handleVolumeVisibility = () => {
   setIsVolumeVisible(oldClass => !oldClass)
-}
+  }
   
 
   return (

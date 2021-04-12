@@ -6,7 +6,7 @@ interface PlayPauseProps {
   buttonName: any;
 }
 
-const PlayPauseButton: React.FC<PlayPauseProps> = ({playTheSound, buttonName}) => {
+const PlayPauseButton = ({playTheSound, buttonName}: PlayPauseProps) => {
   return (
   <button className="playPause" onClick={playTheSound}>{buttonName}</button>
   )

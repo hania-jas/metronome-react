@@ -5,7 +5,7 @@ interface ButtonProps {
   controlVolume: () => void;
 }
 
-const VolumeButton: React.FC<ButtonProps> = ({value, controlVolume}) => {
+const VolumeButton = ({value, controlVolume}: ButtonProps) => {
   return(
     <button className="volumeButton" onClick={controlVolume}>{value}</button>
   )

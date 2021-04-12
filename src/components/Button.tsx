@@ -5,7 +5,7 @@ interface ButtonProps {
   changeValue: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({value, changeValue}) => {
+const Button = ({value, changeValue}: ButtonProps) => {
   return(
     <button className="button" onClick={changeValue}>{value}</button>
   )
