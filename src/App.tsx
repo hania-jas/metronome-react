@@ -21,7 +21,7 @@ const App = () => {
 const [tempo, setTempo] = useState<number>(60);
 const [isAnimationVisible, setIsAnimationVisible] = useState<boolean>(false);
 const [isVolumeVisible, setIsVolumeVisible] = useState<boolean>(false);
-const [buttonName, setButtonName] = useState<any>(<FontAwesomeIcon icon={faPlayCircle}/>);
+const [buttonName, setButtonName] = useState<any>(faPlayCircle);
 const [sound, setSound] = useState(tick1)
 const [volume, setVolume] = useState<number>(1);
 const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -104,10 +104,10 @@ const play = (): void => {
 const togglePlay = (): void => {
   if (intervalRef.current === null) {
    play();
-   setButtonName(<FontAwesomeIcon icon={faPause}/>);
+   setButtonName(faPause);
   } else {
    pause();
-   setButtonName(<FontAwesomeIcon icon={faPlayCircle}/>);
+   setButtonName(faPlayCircle);
   }
 }
 
@@ -155,7 +155,7 @@ const handleVolumeVisibility = () => {
       </div>
       <div className="buttons">
         <Button value={<FontAwesomeIcon icon={faMinus}/>} changeValue={() => setTempo(tempo - 1)} />
-        <PlayPauseButton playTheSound={togglePlay} buttonName={buttonName}/>
+        <PlayPauseButton playTheSound={togglePlay} buttonName={<FontAwesomeIcon icon={buttonName}/>}/>
         <Button value={<FontAwesomeIcon icon={faPlus}/>} changeValue={() => setTempo(tempo + 1)}/>
       </div>
       <div className="controlButtons">
