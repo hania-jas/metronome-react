@@ -45,7 +45,7 @@ body {
 
 .containerApp {
     display: flex;
-    height: 280px;
+    height: 260px;
     align-items: flex-end;
     justify-content: space-around;
 }
@@ -72,6 +72,7 @@ body {
     align-items: center;
     justify-content: space-around;
     height: 160px;
+    margin-bottom: 40px;
 }
 
 .button {
@@ -122,6 +123,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    /* background-color: #1e262f; */
 }
 
 .MuiSlider-root {

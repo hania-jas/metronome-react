@@ -1,15 +1,13 @@
 
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useMemo} from 'react';
 import ReactDOM from 'react-dom';
 import CircularSlider from '@fseehawer/react-circular-slider';
 import Select from 'react-select'  
 import Slider from '@material-ui/core/Slider';
 import { StylesProvider } from "@material-ui/core/styles";
-import './App.css';
-// @ts-ignore
 import tick1 from './sounds/tick1.wav';
-// @ts-ignore
 import tick2 from './sounds/tick2.wav';
+import './App.css';
 import Button from './components/Button';
 import VolumeButton from './components/VolumeButton';
 import PlayPauseButton from './components/PlayPauseButton';
@@ -68,7 +66,7 @@ const selectStyles = {
  
 }
 
-const options = [
+const options =  [
   {value: tick1, label: 1 },
   {value: tick2, label: 2 }
 ]
@@ -85,26 +83,25 @@ const restartMetronome = (): void => {
   }
 }
 
- const tick = (): void => { 
+const tick = (): void => { 
   audio.play();
   setIsAnimationVisible(oldClass => !oldClass);
- }
+}
 
- const play = (): void => {
+const play = (): void => {
   const timer = TIMER_CONST / tempo;
   const id = setInterval(tick, timer);
   intervalRef.current = id;
   console.log(options[0].label)
-    
- }
+}
 
  const pause = (): void => {
   // @ts-ignore
   clearInterval(intervalRef.current);
   intervalRef.current = null;
- }
+}
 
-  const togglePlay = (): void => {
+const togglePlay = (): void => {
   if (intervalRef.current === null) {
    play();
    setButtonName(<FontAwesomeIcon icon={faPause}/>);
@@ -112,16 +109,21 @@ const restartMetronome = (): void => {
    pause();
    setButtonName(<FontAwesomeIcon icon={faPlayCircle}/>);
   }
-}// @ts-ignore
-  const handleChange = (option): void => setSound(option.value)
+}
+
+const handleChange = (option: {value: any; label: number} | null): void => {
+  if(option) {
+    setSound(option.value)
+  }
+}
 // @ts-ignore
-  const handleSound = (event, newValue): void => {
+const handleSound = (event, newValue): void => {
   setVolume(newValue);
 };
 
-  const handleVolumeVisibility = () => {
+const handleVolumeVisibility = () => {
   setIsVolumeVisible(oldClass => !oldClass)
-  }
+}
   
 
   return (
@@ -159,10 +161,10 @@ const restartMetronome = (): void => {
       <div className="controlButtons">
         <VolumeButton value={<FontAwesomeIcon icon={faVolumeUp}/>}  controlVolume={handleVolumeVisibility}/>
         <div>
-        <StylesProvider  injectFirst>
-         <Slider className={` ${isVolumeVisible? 'showVolume' : 'hideVolume'}`} value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>
-         </StylesProvider>
-         </div>
+          <StylesProvider  injectFirst>
+            <Slider className={` ${isVolumeVisible? 'showVolume' : 'hideVolume'}`} value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>
+          </StylesProvider>
+        </div>
         <Select onChange={handleChange} options={options} placeholder={<FontAwesomeIcon icon={faMusic}/>} styles={selectStyles}/>
       </div>
     </div>

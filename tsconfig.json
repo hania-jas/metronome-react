@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es6", "dom"],
-    "noImplicitAny": false,
-    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
     "strictNullChecks": true,
     "allowJs": true,
     "skipLibCheck": true,
