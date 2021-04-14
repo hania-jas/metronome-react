@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect, useRef, useMemo} from 'react';
+import React, {useState, useEffect, useRef, useMemo, ChangeEvent} from 'react';
 import ReactDOM from 'react-dom';
 import CircularSlider from '@fseehawer/react-circular-slider';
 import Select from 'react-select'  
@@ -116,9 +116,11 @@ const handleChange = (option: {value: any; label: number} | null): void => {
     setSound(option.value)
   }
 }
-// @ts-ignore
-const handleSound = (event, newValue): void => {
+
+const handleSound = (event: ChangeEvent<{}>, newValue: number | number[]): void => {
+  if(!Array.isArray(newValue)) {
   setVolume(newValue);
+  }
 };
 
 const handleVolumeVisibility = () => {
