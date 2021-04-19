@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface ButtonProps {
   value: any;
@@ -7,7 +8,7 @@ interface ButtonProps {
 
 const VolumeButton = ({value, controlVolume}: ButtonProps) => {
   return(
-    <button className="volumeButton" onClick={controlVolume}>{value}</button>
+    <button className="volumeButton" onClick={controlVolume}>{<FontAwesomeIcon icon={value}/>}</button>
   )
 }
 

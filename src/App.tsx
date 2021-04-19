@@ -21,7 +21,7 @@ const App = () => {
 const [tempo, setTempo] = useState<number>(60);
 const [isAnimationVisible, setIsAnimationVisible] = useState<boolean>(false);
 const [isVolumeVisible, setIsVolumeVisible] = useState<boolean>(false);
-const [buttonName, setButtonName] = useState<any>(faPlayCircle);
+const [iconName, setIconName] = useState<any>(faPlayCircle);
 const [sound, setSound] = useState(tick1)
 const [volume, setVolume] = useState<number>(1);
 const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -104,10 +104,10 @@ const play = (): void => {
 const togglePlay = (): void => {
   if (intervalRef.current === null) {
    play();
-   setButtonName(faPause);
+   setIconName(faPause);
   } else {
    pause();
-   setButtonName(faPlayCircle);
+   setIconName(faPlayCircle);
   }
 }
 
@@ -156,12 +156,12 @@ const handleVolumeVisibility = () => {
         />
       </div>
       <div className="buttons">
-        <Button value={<FontAwesomeIcon icon={faMinus}/>} changeValue={() => setTempo(tempo - 1)} />
-        <PlayPauseButton playTheSound={togglePlay} buttonName={<FontAwesomeIcon icon={buttonName}/>}/>
-        <Button value={<FontAwesomeIcon icon={faPlus}/>} changeValue={() => setTempo(tempo + 1)}/>
+        <Button value={faMinus} changeValue={() => setTempo(tempo - 1)} />
+        <PlayPauseButton playTheSound={togglePlay} iconName={iconName}/>
+        <Button value={faPlus} changeValue={() => setTempo(tempo + 1)}/>
       </div>
       <div className="controlButtons">
-        <VolumeButton value={<FontAwesomeIcon icon={faVolumeUp}/>}  controlVolume={handleVolumeVisibility}/>
+        <VolumeButton value={faVolumeUp}  controlVolume={handleVolumeVisibility}/>
         <div>
           <StylesProvider  injectFirst>
             <Slider className={` ${isVolumeVisible? 'showVolume' : 'hideVolume'}`} value={volume}   step={0.1}  defaultValue={0.01} onChange={handleSound} aria-labelledby="continuous-slider" min={0} max={1}/>

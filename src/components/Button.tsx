@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface ButtonProps {
   value: any;
@@ -7,7 +8,7 @@ interface ButtonProps {
 
 const Button = ({value, changeValue}: ButtonProps) => {
   return(
-    <button className="button" onClick={changeValue}>{value}</button>
+    <button className="button" onClick={changeValue}><FontAwesomeIcon icon={value}/></button>
   )
 }
 
