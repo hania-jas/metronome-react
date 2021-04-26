@@ -90,15 +90,16 @@ const tick = (): void => {
 
 const play = (): void => {
   const timer = TIMER_CONST / tempo;
-  const id = setInterval(tick, timer);
-  intervalRef.current = id;
+  const id = setInterval(tick, timer)
+  intervalRef.current = id
   console.log(options[0].label)
 }
 
  const pause = (): void => {
-  // @ts-ignore
-  clearInterval(intervalRef.current);
-  intervalRef.current = null;
+   if(intervalRef.current) {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+   }
 }
 
 const togglePlay = (): void => {
