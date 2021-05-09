@@ -1,6 +1,5 @@
 
-import React, {useState, useEffect, useRef, useMemo, ChangeEvent} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect, useRef, ChangeEvent} from 'react';
 import CircularSlider from '@fseehawer/react-circular-slider';
 import Select from 'react-select'  
 import Slider from '@material-ui/core/Slider';
@@ -11,13 +10,21 @@ import './App.css';
 import Button from './components/Button';
 import VolumeButton from './components/VolumeButton';
 import PlayPauseButton from './components/PlayPauseButton';
-import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle, faPause, faPlus, faMinus, faRecordVinyl, faMusic, faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 
-const TIMER_CONST = 60000;
+const TIMER_CONST: number = 60000;
 
+export enum SoundType {
+  FirstSound = 'firstSound',
+  SecondSound = 'secondSound',
+}
+export interface Option {
+  value: SoundType;
+  label: string;
+}
 
-const App = () => {
+const App = (): JSX.Element => {
 const [tempo, setTempo] = useState<number>(60);
 const [isAnimationVisible, setIsAnimationVisible] = useState<boolean>(false);
 const [isVolumeVisible, setIsVolumeVisible] = useState<boolean>(false);
@@ -26,8 +33,9 @@ const [sound, setSound] = useState(tick1)
 const [volume, setVolume] = useState<number>(1);
 const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-let audio = new Audio(sound);
+let audio: HTMLAudioElement = new Audio(sound);
 audio.volume = volume;
+
 
 const selectStyles = {
   
@@ -66,13 +74,13 @@ const selectStyles = {
  
 }
 
-const options =  [
-  {value: tick1, label: 1 },
-  {value: tick2, label: 2 }
+const options: Option[] =  [
+  {value: SoundType.FirstSound, label: '1' },
+  {value: SoundType.SecondSound, label: '2' }
 ]
 
 
-useEffect(() => {
+useEffect((): void => {
   restartMetronome();
 }, [tempo, options])
 
@@ -85,12 +93,12 @@ const restartMetronome = (): void => {
 
 const tick = (): void => { 
   audio.play();
-  setIsAnimationVisible(oldClass => !oldClass);
+  setIsAnimationVisible((oldClass: boolean): boolean => !oldClass);
 }
 
 const play = (): void => {
-  const timer = TIMER_CONST / tempo;
-  const id = setInterval(tick, timer)
+  const timer: number = TIMER_CONST / tempo;
+  const id: NodeJS.Timeout = setInterval(tick, timer)
   intervalRef.current = id
   console.log(options[0].label)
 }
@@ -112,9 +120,17 @@ const togglePlay = (): void => {
   }
 }
 
-const handleChange = (option: {value: any; label: number} | null): void => {
+const handleChange = (option: Option | null): void => {
   if(option) {
-    setSound(option.value)
+    switch (option.value) {
+      case SoundType.FirstSound:
+        setSound(tick1);
+        break;
+      case SoundType.SecondSound:
+       default:
+        setSound(tick2);
+        break;
+    }
   }
 }
 
@@ -124,8 +140,8 @@ const handleSound = (event: ChangeEvent<{}>, newValue: number | number[]): void 
   }
 };
 
-const handleVolumeVisibility = () => {
-  setIsVolumeVisible(oldClass => !oldClass)
+const handleVolumeVisibility = (): void => {
+  setIsVolumeVisible((oldClass : boolean): boolean => !oldClass)
 }
   
 
