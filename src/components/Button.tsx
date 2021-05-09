@@ -6,7 +6,7 @@ interface ButtonProps {
   changeValue: () => void;
 }
 
-const Button = ({value, changeValue}: ButtonProps) => {
+const Button = ({value, changeValue}: ButtonProps): JSX.Element => {
   return(
     <button className="button" onClick={changeValue}><FontAwesomeIcon icon={value}/></button>
   )

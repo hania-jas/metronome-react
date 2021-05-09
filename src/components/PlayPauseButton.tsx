@@ -7,7 +7,7 @@ interface PlayPauseProps {
   iconName: any;
 }
 
-const PlayPauseButton = ({playTheSound, iconName}: PlayPauseProps) => {
+const PlayPauseButton = ({playTheSound, iconName}: PlayPauseProps): JSX.Element => {
   return (
   <button className="playPause" onClick={playTheSound}><FontAwesomeIcon icon={iconName}/></button>
   )

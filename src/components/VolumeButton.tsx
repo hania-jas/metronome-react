@@ -6,7 +6,7 @@ interface ButtonProps {
   controlVolume: () => void;
 }
 
-const VolumeButton = ({value, controlVolume}: ButtonProps) => {
+const VolumeButton = ({value, controlVolume}: ButtonProps): JSX.Element => {
   return(
     <button className="volumeButton" onClick={controlVolume}>{<FontAwesomeIcon icon={value}/>}</button>
   )
